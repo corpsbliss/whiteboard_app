@@ -1,0 +1,36 @@
+build-and-deploy:
+  runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKER_IMAGE_NAME }} .
+
+      # Optional: Push to Docker Hub or GitHub Container Registry
+       - name: Log in to Docker Hub
+         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+       - name: Push Docker image
+         run: docker push ${{ secrets.DOCKER_IMAGE_NAME }}
+
+      - name: Deploy to EC2 via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            docker stop sftp-app || true
+            docker rm sftp-app || true
+            cd /home/${{ secrets.EC2_USER }}/sftp-app
+            git pull
+            docker build -t sftp-app .
+            docker run -d -p 5000:5000 --name sftp-app \
+              -v /home/${{ secrets.EC2_USER }}/sftpuser_key.pem:/app/sftpuser_key.pem:ro \
+              sftp-app
