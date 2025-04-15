@@ -20,7 +20,7 @@ jobs:
 
       # Step 3: Build the Docker image
       - name: Build Docker image
-        run:  docker build -t ${{ secrets.DOCKER_IMAGE_NAME }} .
+        run:  docker build -t ${{ secrets.DOCKER_USERNAME }}/whiteboard_hub:${{ secrets.DOCKER_IMAGE_NAME }} .
 
       # Optional: Push to Docker Hub or GitHub Container Registry
       - name: Log in to Docker Hub
