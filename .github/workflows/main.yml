@@ -46,7 +46,7 @@ jobs:
             docker rm sftp-app || true
             cd /home/${{ secrets.EC2_USER }}/sftp-app
             git pull
-            docker build -t sftp-app .
-            docker run -d -p 5000:5000 --name sftp-app \
+            docker pull ${{ secrets.DOCKER_USERNAME }}/whiteboard_hub:${{ env.SHORT_SHA }}
+            docker run -d -p 5000:5000 --restart unless-stopped --name sftp-app \
               -v /home/${{ secrets.EC2_USER }}/sftpuser_key.pem:/app/sftpuser_key.pem:ro \
-              sftp-app
+              ${{ secrets.DOCKER_USERNAME }}/whiteboard_hub:${{ env.SHORT_SHA }}
