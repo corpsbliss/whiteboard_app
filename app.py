@@ -14,7 +14,7 @@ if not os.path.exists(NOTES_DIR):
 SFTP_HOST = '65.0.180.235'
 SFTP_PORT = 22
 SFTP_USER = 'sftpuser'
-PRIVATE_KEY_PATH = './key/sftpuser_key'
+PRIVATE_KEY_PATH = '/whiteboard_app/key/sftpuser_key'
 REMOTE_DIR = 'upload'  # This is the directory on your SFTP server
 
 
