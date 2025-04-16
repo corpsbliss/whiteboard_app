@@ -5,17 +5,16 @@ import paramiko
 
 app = Flask(__name__)
 
-# Folder where notes will be saved locally
 NOTES_DIR = 'notes'
 if not os.path.exists(NOTES_DIR):
     os.makedirs(NOTES_DIR)
 
-# SFTP configuration
+
 SFTP_HOST = '65.0.180.235'
 SFTP_PORT = 22
 SFTP_USER = 'sftpuser'
 PRIVATE_KEY_PATH = '/whiteboard_app/key/sftpuser_key'
-REMOTE_DIR = 'upload'  # This is the directory on your SFTP server
+REMOTE_DIR = 'upload'  
 
 
 def upload_to_sftp(local_path, remote_filename):
@@ -91,11 +90,11 @@ def download_file(filename):
 def delete_file(filename):
     filepath = os.path.join(NOTES_DIR, filename)
 
-    # Delete from local folder
+    
     if os.path.exists(filepath):
         os.remove(filepath)
 
-    # Delete from SFTP server
+    
     delete_from_sftp(filename)
 
     return redirect(url_for('index'))
