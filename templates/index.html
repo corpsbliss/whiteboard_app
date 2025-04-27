@@ -196,6 +196,18 @@
             visibility: visible;
             opacity: 1;
         }
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            text-align: center;
+            padding: 8px 0;
+            font-size: 14px;
+            box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.3);
+      }
     </style>
 </head>
 <body>
@@ -243,7 +255,9 @@
     </div>
     {% endif %}
 </div>
-
+<footer>
+Served by: {{ pod_name }}
+</footer>
 </body>
 </html>
 
