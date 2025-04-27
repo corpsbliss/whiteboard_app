@@ -15,7 +15,8 @@ r = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=0, decode_responses=T
 
 #r = redis.StrictRedis(host='redis_cont', port=6379, db=0, decode_responses=True)
 
-NOTES_DIR = 'notes'
+#NOTES_DIR = 'notes'
+NOTES_DIR = 'uploads'
 if not os.path.exists(NOTES_DIR):
     os.makedirs(NOTES_DIR)
 
