@@ -12,6 +12,7 @@ app = Flask(__name__)
 REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')  # fallback for local runs
 REDIS_PORT = int(os.environ.get('REDIS_PORT', 6379))
 r = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=0, decode_responses=True)
+pod_name = os.getenv('POD_NAME', 'Unknown Pod')
 
 #r = redis.StrictRedis(host='redis_cont', port=6379, db=0, decode_responses=True)
 
@@ -86,7 +87,7 @@ def index():
 
     files = sorted(os.listdir(NOTES_DIR), reverse=True)
     return render_template('index.html', files=files, content=None, selected=None,
-                           total_visitors=total_visitors, last_accessed_note=last_accessed_note)
+                           total_visitors=total_visitors, last_accessed_note=last_accessed_note,pod_name=pod_name)
 
 
 @app.route('/view/<filename>')
