@@ -8,7 +8,12 @@ import redis
 app = Flask(__name__)
 
 # Redis connection setup (adjust the host if needed)
-r = redis.StrictRedis(host='redis_cont', port=6379, db=0, decode_responses=True)
+
+REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')  # fallback for local runs
+REDIS_PORT = int(os.environ.get('REDIS_PORT', 6379))
+r = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=0, decode_responses=True)
+
+#r = redis.StrictRedis(host='redis_cont', port=6379, db=0, decode_responses=True)
 
 NOTES_DIR = 'notes'
 if not os.path.exists(NOTES_DIR):
