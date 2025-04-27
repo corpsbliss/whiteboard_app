@@ -24,6 +24,16 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
+        .stats {
+            background-color: #fff;
+            padding: 1rem 2rem;
+            margin: 1rem auto;
+            max-width: 800px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            font-size: 1.1rem;
+        }
         .container {
             max-width: 900px;
             margin: 40px auto;
@@ -191,7 +201,10 @@
 <body>
 
 <header>My Whiteboard</header>
-
+<div class="stats">
+    <p><strong>Total Visitors:</strong> {{ total_visitors }}</p>
+    <p><strong>Last Accessed Note:</strong> {{ last_accessed_note }}</p>
+</div>
 <div class="container">
     <form method="POST" action="{{ url_for('index') }}">
         <textarea name="user_input" placeholder="Write something..."></textarea>
