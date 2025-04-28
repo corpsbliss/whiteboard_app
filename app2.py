@@ -90,6 +90,7 @@ def index():
         return redirect(url_for('index'))
 
     files = sorted(os.listdir(NOTES_DIR), reverse=True)
+    print(f"Pod Name: {pod_name}")
     return render_template('index.html', files=files, content=None, selected=None,
                            total_visitors=total_visitors, last_accessed_note=last_accessed_note,pod_name=pod_name)
 
@@ -108,6 +109,7 @@ def view_file(filename):
         with open(filepath, 'r') as f:
             content = f.read()
         files = sorted(os.listdir(NOTES_DIR), reverse=True)
+        print(f"Pod Name: {pod_name}")
         return render_template('index.html', files=files, content=content, selected=filename,
                                total_visitors=r.get('total_visitors'), last_accessed_note=filename,pod_name=pod_name)
     return redirect(url_for('index'))
