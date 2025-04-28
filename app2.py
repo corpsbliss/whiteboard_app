@@ -63,6 +63,10 @@ def delete_from_sftp(remote_filename):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')  # fallback for local runs
+    REDIS_PORT = int(os.environ.get('REDIS_PORT', 6379))
+    r = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=0, decode_responses=True)
+    pod_name = os.getenv('POD_NAME', 'Unknown Pod')
     # Increment total visitor count in Redis
     r.incr('total_visitors')
 
@@ -93,6 +97,10 @@ def index():
 @app.route('/view/<filename>')
 def view_file(filename):
     # Update the last accessed note in Redis
+    REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')  # fallback for local runs
+    REDIS_PORT = int(os.environ.get('REDIS_PORT', 6379))
+    r = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=0, decode_responses=True)
+    pod_name = os.getenv('POD_NAME', 'Unknown Pod')
     r.set('last_accessed_note', filename)
 
     filepath = os.path.join(NOTES_DIR, filename)
@@ -101,7 +109,7 @@ def view_file(filename):
             content = f.read()
         files = sorted(os.listdir(NOTES_DIR), reverse=True)
         return render_template('index.html', files=files, content=content, selected=filename,
-                               total_visitors=r.get('total_visitors'), last_accessed_note=filename)
+                               total_visitors=r.get('total_visitors'), last_accessed_note=filename,pod_name=pod_name)
     return redirect(url_for('index'))
 
 
