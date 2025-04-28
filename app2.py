@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 # Redis connection setup (adjust the host if needed)
 
-REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')  # fallback for local runs
+REDIS_HOST = os.environ.get('REDIS_HOST', 'redis-cont')  # fallback for local runs
 REDIS_PORT = int(os.environ.get('REDIS_PORT', 6379))
 r = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=0, decode_responses=True)
 pod_name = os.getenv('POD_NAME', 'Unknown Pod')
@@ -63,7 +63,8 @@ def delete_from_sftp(remote_filename):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')  # fallback for local runs
+    #REDIS_HOST = os.environ.get('REDIS_HOST', 'redis-cont')  # fallback for local runs
+    REDIS_HOST = 'redis-cont'#os.environ.get('R', 'localhost')  # fallback for local runs
     REDIS_PORT = int(os.environ.get('REDIS_PORT', 6379))
     r = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=0, decode_responses=True)
     pod_name = os.getenv('POD_NAME', 'Unknown Pod')
@@ -98,7 +99,7 @@ def index():
 @app.route('/view/<filename>')
 def view_file(filename):
     # Update the last accessed note in Redis
-    REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')  # fallback for local runs
+    REDIS_HOST = os.environ.get('REDIS_HOST', 'redis-cont')  # fallback for local runs
     REDIS_PORT = int(os.environ.get('REDIS_PORT', 6379))
     r = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=0, decode_responses=True)
     pod_name = os.getenv('POD_NAME', 'Unknown Pod')
