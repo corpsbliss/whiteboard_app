@@ -8,4 +8,4 @@ RUN apt-get update && \
 RUN mkdir -p key
 EXPOSE 5000
 ENTRYPOINT ["python","-u"]
-CMD ["app.py"]
+CMD ["app2.py"]
